@@ -1,0 +1,21 @@
+name: user_events
+description: Daily user events snapshot
+location: s3://analytics/user_events/
+owner: data-platform
+last_updated: "2026-02-06T18:30:00Z"
+freshness_hours: 24
+record_count: 980000
+expected_min_records: 1000000
+schema:
+  - id
+  - user_id
+  - event_type
+  - ts
+expected_schema:
+  - id
+  - user_id
+  - event_type
+  - ts
+  - device
+bytes: 987654321
+expected_min_bytes: 900000000

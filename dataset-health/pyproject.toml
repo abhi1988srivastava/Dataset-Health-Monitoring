@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataset-health"
+version = "0.1.0"
+description = "Plugin-friendly dataset health checks with JSON and HTML output."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "pyyaml",
+]
+
+[project.scripts]
+dataset-health = "cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["registry", "health", "explain", "cli"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = true
