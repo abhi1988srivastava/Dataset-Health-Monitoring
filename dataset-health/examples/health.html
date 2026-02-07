@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Dataset Health</title>
+  <style>
+    :root {
+      --green: #1f7a1f;
+      --yellow: #b36b00;
+      --red: #b00020;
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1b1f24;
+      --muted: #5d6771;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    h1 { margin: 0; font-size: 28px; }
+    .muted { color: var(--muted); font-size: 14px; }
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .card {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .card h2 { margin: 0 0 6px; font-size: 18px; }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    .status-pill.green { background: rgba(31, 122, 31, 0.12); color: var(--green); }
+    .status-pill.yellow { background: rgba(179, 107, 0, 0.12); color: var(--yellow); }
+    .status-pill.red { background: rgba(176, 0, 32, 0.12); color: var(--red); }
+    .dataset {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 6px solid transparent;
+    }
+    .dataset.green { border-left-color: var(--green); }
+    .dataset.yellow { border-left-color: var(--yellow); }
+    .dataset.red { border-left-color: var(--red); }
+    .dataset-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .dataset-header h2 { margin: 0; font-size: 20px; }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px 20px;
+      margin: 14px 0 18px;
+      font-size: 14px;
+    }
+    .meta-grid div span { color: var(--muted); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 10px 8px; font-size: 14px; }
+    th { border-bottom: 1px solid #e0e4ea; color: var(--muted); }
+    tr + tr td { border-top: 1px solid #f0f2f5; }
+    details { margin-top: 6px; }
+    pre {
+      background: #f4f5f8;
+      padding: 10px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Dataset Health</h1>
+      <div class="muted">Generated at 2026-02-07T18:30:00+00:00</div>
+    </header>
+    <section class="summary">
+      <div class="card"><h2>Total</h2><div>8</div></div>
+      <div class="card"><h2>Green</h2><div>1</div></div>
+      <div class="card"><h2>Yellow</h2><div>3</div></div>
+      <div class="card"><h2>Red</h2><div>4</div></div>
+    </section>
+    <section class="dataset red">
+      <div class="dataset-header">
+        <h2>app_sessions</h2>
+        <span class="status-pill red">RED</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Mobile app session rollup</div>
+        <div><span>Location:</span> s3://analytics/app_sessions/</div>
+        <div><span>Owner:</span> product-analytics</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-07T15:45:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill red">RED</span></td>
+            <td>Record count significantly below expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 1000000.0,
+  &quot;ratio&quot;: 0.65,
+  &quot;record_count&quot;: 650000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Age 2.8h (SLA 12.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 2.75,
+  &quot;last_updated&quot;: &quot;2026-02-07T15:45:00+00:00&quot;,
+  &quot;sla_hours&quot;: 12.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Schema matches expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Volume meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 780000000.0,
+  &quot;bytes_human&quot;: &quot;743.87 MB&quot;,
+  &quot;expected_min_bytes&quot;: 700000000.0,
+  &quot;expected_min_human&quot;: &quot;667.57 MB&quot;,
+  &quot;ratio&quot;: 1.114
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset yellow">
+      <div class="dataset-header">
+        <h2>churn_model_features</h2>
+        <span class="status-pill yellow">YELLOW</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Feature store snapshot for churn model</div>
+        <div><span>Location:</span> s3://ml/features/churn/</div>
+        <div><span>Owner:</span> ml-platform</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-07T10:00:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Record count meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 100000.0,
+  &quot;ratio&quot;: 1.2,
+  &quot;record_count&quot;: 120000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Age 8.5h (SLA 36.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 8.5,
+  &quot;last_updated&quot;: &quot;2026-02-07T10:00:00+00:00&quot;,
+  &quot;sla_hours&quot;: 36.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill yellow">YELLOW</span></td>
+            <td>Schema has extra fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [
+    &quot;device_type&quot;
+  ],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Volume meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 220000000.0,
+  &quot;bytes_human&quot;: &quot;209.81 MB&quot;,
+  &quot;expected_min_bytes&quot;: 200000000.0,
+  &quot;expected_min_human&quot;: &quot;190.73 MB&quot;,
+  &quot;ratio&quot;: 1.1
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset yellow">
+      <div class="dataset-header">
+        <h2>device_inventory</h2>
+        <span class="status-pill yellow">YELLOW</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Device inventory for fleet management</div>
+        <div><span>Location:</span> gcs://ops/device_inventory/</div>
+        <div><span>Owner:</span> operations</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-06T08:30:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Record count meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 45000.0,
+  &quot;ratio&quot;: 1.067,
+  &quot;record_count&quot;: 48000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill yellow">YELLOW</span></td>
+            <td>Age 34.0h (SLA 24.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 34.0,
+  &quot;last_updated&quot;: &quot;2026-02-06T08:30:00+00:00&quot;,
+  &quot;sla_hours&quot;: 24.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Schema matches expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Volume meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 85000000.0,
+  &quot;bytes_human&quot;: &quot;81.06 MB&quot;,
+  &quot;expected_min_bytes&quot;: 80000000.0,
+  &quot;expected_min_human&quot;: &quot;76.29 MB&quot;,
+  &quot;ratio&quot;: 1.062
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset yellow">
+      <div class="dataset-header">
+        <h2>marketing_attribution</h2>
+        <span class="status-pill yellow">YELLOW</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Attribution export from ad platforms</div>
+        <div><span>Location:</span> s3://marketing/attribution/</div>
+        <div><span>Owner:</span> growth</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-07T05:15:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Record count meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 200000.0,
+  &quot;ratio&quot;: 1.05,
+  &quot;record_count&quot;: 210000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Age 13.2h (SLA 24.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 13.25,
+  &quot;last_updated&quot;: &quot;2026-02-07T05:15:00+00:00&quot;,
+  &quot;sla_hours&quot;: 24.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Schema matches expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill yellow">YELLOW</span></td>
+            <td>Missing bytes or expected_min_bytes metadata.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 120000000,
+  &quot;expected_min_bytes&quot;: null
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset red">
+      <div class="dataset-header">
+        <h2>purchases</h2>
+        <span class="status-pill red">RED</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Orders placed and payments received</div>
+        <div><span>Location:</span> s3://analytics/purchases/</div>
+        <div><span>Owner:</span> revenue-ops</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-05T12:00:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Record count meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 1200000.0,
+  &quot;ratio&quot;: 1.208,
+  &quot;record_count&quot;: 1450000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill red">RED</span></td>
+            <td>Age 54.5h (SLA 24.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 54.5,
+  &quot;last_updated&quot;: &quot;2026-02-05T12:00:00+00:00&quot;,
+  &quot;sla_hours&quot;: 24.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Schema matches expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Volume meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 1234567890.0,
+  &quot;bytes_human&quot;: &quot;1.15 GB&quot;,
+  &quot;expected_min_bytes&quot;: 1100000000.0,
+  &quot;expected_min_human&quot;: &quot;1.02 GB&quot;,
+  &quot;ratio&quot;: 1.122
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset green">
+      <div class="dataset-header">
+        <h2>support_tickets</h2>
+        <span class="status-pill green">GREEN</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Customer support ticket export</div>
+        <div><span>Location:</span> s3://support/tickets/</div>
+        <div><span>Owner:</span> support</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-07T16:50:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Record count meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 50000.0,
+  &quot;ratio&quot;: 1.04,
+  &quot;record_count&quot;: 52000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Age 1.7h (SLA 8.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 1.67,
+  &quot;last_updated&quot;: &quot;2026-02-07T16:50:00+00:00&quot;,
+  &quot;sla_hours&quot;: 8.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Schema matches expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Volume meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 98000000.0,
+  &quot;bytes_human&quot;: &quot;93.46 MB&quot;,
+  &quot;expected_min_bytes&quot;: 90000000.0,
+  &quot;expected_min_human&quot;: &quot;85.83 MB&quot;,
+  &quot;ratio&quot;: 1.089
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset red">
+      <div class="dataset-header">
+        <h2>user_events</h2>
+        <span class="status-pill red">RED</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Daily user events snapshot</div>
+        <div><span>Location:</span> s3://analytics/user_events/</div>
+        <div><span>Owner:</span> data-platform</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-06T18:30:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill yellow">YELLOW</span></td>
+            <td>Record count slightly below expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 1000000.0,
+  &quot;ratio&quot;: 0.98,
+  &quot;record_count&quot;: 980000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Age 24.0h (SLA 24.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 24.0,
+  &quot;last_updated&quot;: &quot;2026-02-06T18:30:00+00:00&quot;,
+  &quot;sla_hours&quot;: 24.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill red">RED</span></td>
+            <td>Missing expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: [
+    &quot;device&quot;
+  ]
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Volume meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 987654321.0,
+  &quot;bytes_human&quot;: &quot;941.90 MB&quot;,
+  &quot;expected_min_bytes&quot;: 900000000.0,
+  &quot;expected_min_human&quot;: &quot;858.31 MB&quot;,
+  &quot;ratio&quot;: 1.097
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section class="dataset red">
+      <div class="dataset-header">
+        <h2>web_logs</h2>
+        <span class="status-pill red">RED</span>
+      </div>
+      <div class="meta-grid">
+        <div><span>Description:</span> Web request logs (daily)</div>
+        <div><span>Location:</span> s3://logs/web/requests/</div>
+        <div><span>Owner:</span> infra</div>
+        <div><span>Source:</span> examples/sample_datasets.yaml</div>
+        <div><span>Last Updated:</span> 2026-02-07T17:30:00Z</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>completeness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Record count meets expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;expected_min_records&quot;: 12000000.0,
+  &quot;ratio&quot;: 1.25,
+  &quot;record_count&quot;: 15000000.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>freshness</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Age 1.0h (SLA 6.0h).</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;age_hours&quot;: 1.0,
+  &quot;last_updated&quot;: &quot;2026-02-07T17:30:00+00:00&quot;,
+  &quot;sla_hours&quot;: 6.0
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>schema</td>
+            <td><span class="status-pill green">GREEN</span></td>
+            <td>Schema matches expected fields.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;extra&quot;: [],
+  &quot;missing&quot;: []
+}</pre></details></td>
+          </tr>
+          <tr>
+            <td>volume</td>
+            <td><span class="status-pill red">RED</span></td>
+            <td>Volume significantly below expected minimum.</td>
+            <td><details><summary>View</summary><pre>{
+  &quot;bytes&quot;: 400000000.0,
+  &quot;bytes_human&quot;: &quot;381.47 MB&quot;,
+  &quot;expected_min_bytes&quot;: 800000000.0,
+  &quot;expected_min_human&quot;: &quot;762.94 MB&quot;,
+  &quot;ratio&quot;: 0.5
+}</pre></details></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>
