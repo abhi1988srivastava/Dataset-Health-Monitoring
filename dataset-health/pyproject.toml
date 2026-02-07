@@ -14,13 +14,14 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest"]
+aws = ["boto3"]
 
 [project.scripts]
 dataset-health = "cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-py-modules = ["registry", "health", "explain", "cli"]
+py-modules = ["registry", "health", "explain", "output", "cli"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

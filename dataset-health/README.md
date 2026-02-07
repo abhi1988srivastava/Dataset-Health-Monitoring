@@ -72,6 +72,69 @@ python src/cli.py \
 
 The `--now` flag makes results deterministic so you can compare outputs.
 
+## Automation outputs
+
+Use `--output` to select a single, machine-friendly format:
+
+- `report-json` (full report, default)
+- `summary-json` (compact counts + overall status)
+- `jsonl` (one dataset per line)
+- `prometheus` (text exposition format)
+- `cloudwatch` (pushes metrics to AWS CloudWatch)
+
+### Summary JSON
+
+```bash
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --output summary-json \
+  --stdout
+```
+
+### JSON Lines
+
+```bash
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --output jsonl \
+  --out examples/health.jsonl
+```
+
+### Prometheus
+
+```bash
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --output prometheus \
+  --stdout
+```
+
+### CloudWatch
+
+```bash
+pip install -e ".[aws]"
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --output cloudwatch \
+  --cloudwatch-namespace DatasetHealth \
+  --cloudwatch-dimensions env=dev,team=data-platform
+```
+
+### Exit codes for automation
+
+Use `--fail-on` to signal failures to CI/CD or schedulers:
+
+- `--fail-on red` exits with code 2 on RED
+- `--fail-on yellow` exits with code 2 on YELLOW or RED
+
+```bash
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --output summary-json \
+  --stdout \
+  --fail-on red
+```
+
 ## Plugin model
 
 Checks are pluggable. A check is a callable that returns a `CheckResult`.

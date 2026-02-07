@@ -41,6 +41,21 @@ The generated HTML is stored at:
 
 - `dataset-health/examples/health.html`
 
+## Automation outputs
+
+For automation workflows you can select a single output format:
+
+```bash
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --output summary-json \
+  --stdout \
+  --fail-on red
+```
+
+Prometheus and CloudWatch outputs are supported. See
+`dataset-health/README.md` for details and CloudWatch setup.
+
 ## Plugins
 
 Checks are pluggable via Python entry points under the
