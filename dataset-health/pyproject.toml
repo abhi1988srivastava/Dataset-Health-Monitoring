@@ -12,6 +12,9 @@ dependencies = [
   "pyyaml",
 ]
 
+[project.optional-dependencies]
+test = ["pytest"]
+
 [project.scripts]
 dataset-health = "cli:main"
 
@@ -22,3 +25,6 @@ py-modules = ["registry", "health", "explain", "cli"]
 [tool.setuptools.packages.find]
 where = ["src"]
 namespaces = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

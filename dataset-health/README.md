@@ -26,6 +26,12 @@ pip install -e .
 python src/cli.py --datasets datasets --out-json health.json --out-html health.html
 ```
 
+Or run the installed CLI:
+
+```bash
+dataset-health --datasets datasets --out-json health.json --out-html health.html
+```
+
 ### Example dataset definition
 
 ```yaml
@@ -52,6 +58,20 @@ bytes: 987654321
 expected_min_bytes: 900000000
 ```
 
+### Sample datasets for a full report
+
+The repository includes a richer sample set to exercise different outcomes:
+
+```bash
+python src/cli.py \
+  --datasets examples/sample_datasets.yaml \
+  --out-json examples/health.json \
+  --out-html examples/health.html \
+  --now 2026-02-07T18:30:00Z
+```
+
+The `--now` flag makes results deterministic so you can compare outputs.
+
 ## Plugin model
 
 Checks are pluggable. A check is a callable that returns a `CheckResult`.
@@ -71,6 +91,13 @@ The function signature should be:
 def check_policy(dataset, now):
     ...
     return CheckResult(...)
+```
+
+## Testing
+
+```bash
+pip install -e ".[test]"
+pytest
 ```
 
 ## Project layout

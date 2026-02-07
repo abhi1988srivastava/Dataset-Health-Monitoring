@@ -1,0 +1,182 @@
+- name: user_events
+  description: Daily user events snapshot
+  location: s3://analytics/user_events/
+  owner: data-platform
+  last_updated: "2026-02-06T18:30:00Z"
+  freshness_hours: 24
+  record_count: 980000
+  expected_min_records: 1000000
+  schema:
+    - id
+    - user_id
+    - event_type
+    - ts
+  expected_schema:
+    - id
+    - user_id
+    - event_type
+    - ts
+    - device
+  bytes: 987654321
+  expected_min_bytes: 900000000
+
+- name: purchases
+  description: Orders placed and payments received
+  location: s3://analytics/purchases/
+  owner: revenue-ops
+  last_updated: "2026-02-05T12:00:00Z"
+  freshness_hours: 24
+  record_count: 1450000
+  expected_min_records: 1200000
+  schema:
+    - order_id
+    - user_id
+    - amount
+    - currency
+    - created_at
+  expected_schema:
+    - order_id
+    - user_id
+    - amount
+    - currency
+    - created_at
+  bytes: 1234567890
+  expected_min_bytes: 1100000000
+
+- name: app_sessions
+  description: Mobile app session rollup
+  location: s3://analytics/app_sessions/
+  owner: product-analytics
+  last_updated: "2026-02-07T15:45:00Z"
+  freshness_hours: 12
+  record_count: 650000
+  expected_min_records: 1000000
+  schema:
+    - session_id
+    - user_id
+    - platform
+    - started_at
+    - duration_sec
+  expected_schema:
+    - session_id
+    - user_id
+    - platform
+    - started_at
+    - duration_sec
+  bytes: 780000000
+  expected_min_bytes: 700000000
+
+- name: web_logs
+  description: Web request logs (daily)
+  location: s3://logs/web/requests/
+  owner: infra
+  last_updated: "2026-02-07T17:30:00Z"
+  freshness_hours: 6
+  record_count: 15000000
+  expected_min_records: 12000000
+  schema:
+    - request_id
+    - path
+    - status
+    - latency_ms
+    - ts
+  expected_schema:
+    - request_id
+    - path
+    - status
+    - latency_ms
+    - ts
+  bytes: 400000000
+  expected_min_bytes: 800000000
+
+- name: churn_model_features
+  description: Feature store snapshot for churn model
+  location: s3://ml/features/churn/
+  owner: ml-platform
+  last_updated: "2026-02-07T10:00:00Z"
+  freshness_hours: 36
+  record_count: 120000
+  expected_min_records: 100000
+  schema:
+    - user_id
+    - tenure_days
+    - avg_sessions_30d
+    - plan_tier
+    - country
+    - device_type
+  expected_schema:
+    - user_id
+    - tenure_days
+    - avg_sessions_30d
+    - plan_tier
+    - country
+  bytes: 220000000
+  expected_min_bytes: 200000000
+
+- name: device_inventory
+  description: Device inventory for fleet management
+  location: gcs://ops/device_inventory/
+  owner: operations
+  last_updated: "2026-02-06T08:30:00Z"
+  freshness_hours: 24
+  record_count: 48000
+  expected_min_records: 45000
+  schema:
+    - device_id
+    - model
+    - firmware
+    - status
+    - last_seen
+  expected_schema:
+    - device_id
+    - model
+    - firmware
+    - status
+    - last_seen
+  bytes: 85000000
+  expected_min_bytes: 80000000
+
+- name: support_tickets
+  description: Customer support ticket export
+  location: s3://support/tickets/
+  owner: support
+  last_updated: "2026-02-07T16:50:00Z"
+  freshness_hours: 8
+  record_count: 52000
+  expected_min_records: 50000
+  schema:
+    - ticket_id
+    - user_id
+    - status
+    - priority
+    - created_at
+  expected_schema:
+    - ticket_id
+    - user_id
+    - status
+    - priority
+    - created_at
+  bytes: 98000000
+  expected_min_bytes: 90000000
+
+- name: marketing_attribution
+  description: Attribution export from ad platforms
+  location: s3://marketing/attribution/
+  owner: growth
+  last_updated: "2026-02-07T05:15:00Z"
+  freshness_hours: 24
+  record_count: 210000
+  expected_min_records: 200000
+  schema:
+    - campaign_id
+    - channel
+    - spend
+    - conversions
+    - snapshot_date
+  expected_schema:
+    - campaign_id
+    - channel
+    - spend
+    - conversions
+    - snapshot_date
+  bytes: 120000000
